@@ -17,7 +17,7 @@ function HeroSection() {
           <img
             src="./zuro-icon-green.png"
             alt="Zuro Main Icon"
-            className="h-25 w-25 rounded-2xl"
+            className="h-[100px] w-[100px] rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.25)]"
           />
         </div>
 

@@ -1,5 +1,6 @@
 import { LayoutGrid } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const features = [
   {
@@ -11,30 +12,40 @@ const features = [
   {
     id: "02.",
     title: "Seamless Integrations",
-    description: "",
+    description:
+      "Connect with popular tools like Slack, Google Workspace, Salesforce, and more. No need to migrate data—StreamlinePro adapts to your existing workflow.",
   },
   {
     id: "03.",
     title: "Automated Workflows",
-    description: "",
+    description:
+      "Eliminate repetitive tasks by automating processes. Set triggers, define actions, and watch your operations run on autopilot.",
   },
   {
     id: "04.",
     title: "Scalable Infrastructure",
-    description: "",
+    description:
+      "Our cloud-based architecture grows with your business. Handle peak workloads without worrying about downtime or performance bottlenecks.",
   },
 ];
 
 function FeaturesSection() {
+  const [activeFeature, setActiveFeature] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setActiveFeature((prev) => (prev === index ? null : index));
+  };
+
   const descriptionVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.1, // stagger words by 0.1s
+        delay: i * 0.05,
         type: "spring",
         stiffness: 100,
+        damping: 10,
       },
     }),
   };
@@ -60,15 +71,19 @@ function FeaturesSection() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="mb-6 last:mb-0 border-b last:border-b-0 pb-6 last:pb-0"
+              className="mb-6 last:mb-0 border-b last:border-b-0 pb-6 last:pb-0 cursor-pointer"
+              onClick={() => handleToggle(index)}
             >
-              <h3 className="text-3xl font-medium text-gray-900">
-                <span className="text-gray-600 mr-2">{feature.id}</span>
-                {feature.title}
+              <h3 className="text-2xl font-semibold tracking-tight text-gray-900 flex items-center justify-between">
+                <span>
+                  <span className="text-gray-600 mr-2">{feature.id}</span>
+                  {feature.title}
+                </span>
+                <span className="text-2xl">{activeFeature === index ? "−" : "+"}</span>
               </h3>
 
-              {feature.description && (
-                <p className="text-gray-600 mt-2 text-lg leading-relaxed">
+              {activeFeature === index && (
+                <p className="text-gray-600 mt-2 text-lg leading-relaxed flex flex-wrap">
                   {feature.description.split(" ").map((word, i) => (
                     <motion.span
                       key={i}
